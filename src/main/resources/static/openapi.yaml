@@ -5,7 +5,7 @@ info:
     This is a sample EatClub project to demonstrate functioning of APIs associated with it.
   version: 0.1.0
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8080/eat-club
 tags:
   - name: deals
     description: Everything about your Deals
@@ -19,10 +19,12 @@ paths:
       parameters:
         - name: timeOfDay
           in: query
-          description: Time of Day in 24 hour format
           required: true
           schema:
             type: string
+            format: time
+            example: "14:30"
+          description: Time of day in HH:mm format
       responses:
         '200':
           description: successful operation
