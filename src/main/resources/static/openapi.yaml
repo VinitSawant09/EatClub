@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: EatClub
+  description: |-
+    This is a sample EatClub project to demonstrate functioning of APIs associated with it.
+  version: 0.1.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: deals
+    description: Everything about your Deals
+paths:
+  /api/v1/deals/active:
+    get:
+      tags:
+        - deals
+      summary: Finds Deals by Time Of Day.
+      description: Multiple deals will be returned as part of this.
+      parameters:
+        - name: timeOfDay
+          in: query
+          description: Time of Day in 24 hour format
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveDealResponse'
+        '404':
+          description: No deals found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoDealsFound"
+  /api/v1/deals/peak:
+    get:
+      tags:
+        - deals
+      summary: Find Peak time window
+      description: Calculates the ‘peak’ time window, during which most deals are available.
+      operationId: findPeak
+      responses:
+        '200':
+          description: Deals found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PeakTimeResponse'
+components:
+  schemas:
+    PeakTimeResponse:
+      type: object
+      properties:
+        peakTimeStart:
+          type: string
+          format: time
+          example: "11:30"
+        peakTimeEnd:
+          type: string
+          format: time
+          example: "22:30"
+    ActiveDealResponse:
+      type: object
+      properties:
+        deals:
+          type: array
+          items:
+            type: object
+            properties:
+              restaurantObjectId:
+                type: string
+              restaurantName:
+                type: string
+              restaurantAddress1:
+                type: string
+              restaurantSuburb:
+                type: string
+              restaurantOpen:
+                type: string
+                format: time
+                example: "15:30"
+              restaurantClose:
+                type: string
+                format: time
+                example: "22:30"
+              dealObjectId:
+                type: string
+              discount:
+                type: string
+              dineIn:
+                type: string
+              lightning:
+                type: string
+              qtyLeft:
+                type: string
+    NoDealsFound:
+      type: object
+      properties:
+        code:
+          type: string
+          example: 404
+        description:
+          type: string
+          example: No Deals Found
