@@ -1,6 +1,7 @@
 package com.eatclub.service;
 
 import com.eatclub.dto.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -38,6 +39,14 @@ class DealsServiceTest {
             assertEquals(expectedRestaurantId, result.getRestaurantObjectId());
             assertEquals(expectedName, result.getRestaurantName());
         }
+    }
+
+    @Test
+    void shouldReturnPeakTime(){
+        Peak peak = dealsService.getPeak();
+        assertNotNull(peak);
+        assertEquals("14:00", peak.getPeakTimeStart());
+        assertEquals("21:00", peak.getPeakTimeEnd());
     }
 
 }

@@ -51,10 +51,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PeakTimeResponse'
+                $ref: '#/components/schemas/Peak'
 components:
   schemas:
-    PeakTimeResponse:
+    Peak:
       type: object
       properties:
         peakTimeStart:

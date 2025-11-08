@@ -1,6 +1,7 @@
 package com.eatclub.controller;
 
 import com.eatclub.dto.ActiveDealsResponse;
+import com.eatclub.dto.Peak;
 import com.eatclub.service.DealsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,5 +20,11 @@ public class DealsController {
     public ResponseEntity<ActiveDealsResponse> getActiveDeals(@RequestParam String timeOfDay){
         log.info("Inside DealsController: getActiveDeals with timeOfDay {}", timeOfDay);
         return ResponseEntity.ok(dealsService.getActiveDeals(timeOfDay));
+    }
+
+    @GetMapping("/peak")
+    public ResponseEntity<Peak> getPeak(){
+        log.info("Inside DealsController: getPeak");
+        return ResponseEntity.ok(dealsService.getPeak());
     }
 }
