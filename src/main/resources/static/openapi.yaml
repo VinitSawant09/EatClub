@@ -38,6 +38,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NoDealsFound"
+        '400':
+          description: Missing or invalid timeOfDay parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
   /api/v1/deals/peak:
     get:
       tags:
@@ -108,3 +114,15 @@ components:
         description:
           type: string
           example: No Deals Found
+    ErrorDto:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        error:
+          type: string
+          example: Missing Request Parameter
+        message:
+          type: string
+          example: timeOfDay is required

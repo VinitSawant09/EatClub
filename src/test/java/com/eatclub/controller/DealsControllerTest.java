@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -39,7 +40,7 @@ class DealsControllerTest {
 
     @Test
     void testGetActiveDeals_returnsExpectedResponse() throws Exception {
-        String timeOfDay = "03:00";
+        String timeOfDay = "3:00pm";
 
         ActiveDealsResponse mockResponse = getActiveDealsResponse();
         Mockito.when(dealsService.getActiveDeals(timeOfDay)).thenReturn(mockResponse);
@@ -56,6 +57,14 @@ class DealsControllerTest {
     void testGetActiveDealsWithNoInput_returns400Response() throws Exception {
         mockMvc.perform(get("/api/v1/deals/active"))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void testGetActiveDeals_returnsEmptyDealsList() throws Exception {
+        Mockito.when(dealsService.getActiveDeals("10:00pm")).thenReturn(new ActiveDealsResponse(Collections.emptyList()));
+        mockMvc.perform(get("/api/v1/deals/active")
+                .param("timeOfDay","10:00pm" ))
+                .andExpect(status().isOk());
     }
 
     @Test
