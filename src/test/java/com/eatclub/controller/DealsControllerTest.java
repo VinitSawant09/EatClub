@@ -53,6 +53,12 @@ class DealsControllerTest {
     }
 
     @Test
+    void testGetActiveDealsWithNoInput_returns400Response() throws Exception {
+        mockMvc.perform(get("/api/v1/deals/active"))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     void testGetPeak_returnsExpectedPeak() throws Exception {
         Peak mockPeak = new Peak("18:00", "20:00");
         Mockito.when(dealsService.getPeak()).thenReturn(mockPeak);
